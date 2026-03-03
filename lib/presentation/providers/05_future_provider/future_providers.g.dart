@@ -6,6 +6,156 @@ part of 'future_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$pokemonHash() => r'5be5d79db416a7dc305b4294c1c77a31e1156883';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+/// See also [pokemon].
+@ProviderFor(pokemon)
+const pokemonProvider = PokemonFamily();
+
+/// See also [pokemon].
+class PokemonFamily extends Family<AsyncValue<String>> {
+  /// See also [pokemon].
+  const PokemonFamily();
+
+  /// See also [pokemon].
+  PokemonProvider call(
+    int pokemonId,
+  ) {
+    return PokemonProvider(
+      pokemonId,
+    );
+  }
+
+  @override
+  PokemonProvider getProviderOverride(
+    covariant PokemonProvider provider,
+  ) {
+    return call(
+      provider.pokemonId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'pokemonProvider';
+}
+
+/// See also [pokemon].
+class PokemonProvider extends FutureProvider<String> {
+  /// See also [pokemon].
+  PokemonProvider(
+    int pokemonId,
+  ) : this._internal(
+          (ref) => pokemon(
+            ref as PokemonRef,
+            pokemonId,
+          ),
+          from: pokemonProvider,
+          name: r'pokemonProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$pokemonHash,
+          dependencies: PokemonFamily._dependencies,
+          allTransitiveDependencies: PokemonFamily._allTransitiveDependencies,
+          pokemonId: pokemonId,
+        );
+
+  PokemonProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.pokemonId,
+  }) : super.internal();
+
+  final int pokemonId;
+
+  @override
+  Override overrideWith(
+    FutureOr<String> Function(PokemonRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: PokemonProvider._internal(
+        (ref) => create(ref as PokemonRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        pokemonId: pokemonId,
+      ),
+    );
+  }
+
+  @override
+  FutureProviderElement<String> createElement() {
+    return _PokemonProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PokemonProvider && other.pokemonId == pokemonId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, pokemonId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin PokemonRef on FutureProviderRef<String> {
+  /// The parameter `pokemonId` of this provider.
+  int get pokemonId;
+}
+
+class _PokemonProviderElement extends FutureProviderElement<String>
+    with PokemonRef {
+  _PokemonProviderElement(super.provider);
+
+  @override
+  int get pokemonId => (origin as PokemonProvider).pokemonId;
+}
+
 String _$pokemonNameHash() => r'07e65764ab8ce591090ef354245c3f5bcd954479';
 
 /// See also [PokemonName].
@@ -20,7 +170,7 @@ final pokemonNameProvider = AsyncNotifierProvider<PokemonName, String>.internal(
 );
 
 typedef _$PokemonName = AsyncNotifier<String>;
-String _$pokemonIdHash() => r'a95ab2f7f426891fcb6e9992ea43fe5f9ae5905f';
+String _$pokemonIdHash() => r'c744f5ef838a8e518e0b3208055e8c581e5cc9d8';
 
 /// See also [PokemonId].
 @ProviderFor(PokemonId)
